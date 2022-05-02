@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block section %}
+
+    <h1>Connect with a Study Group and learn faster</h1>
+
+    <h3>Find a Study Group near You!</h3>
+    <h3>Be involved and network!</h3>
+    <h3>No strings attached.</h3>
+    <h3>Welcome to the club</h3>
+
+    <img src="{{url_for('static', filename='/images/home1.jpg')}}" alt="person studying with macbook">
+
+    <h3>our members:</h3>
+    {% for student in list %}
+        <li>{{ student }}</li>
+    {% endfor %}
+
+{% endblock %}

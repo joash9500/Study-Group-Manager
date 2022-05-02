@@ -1,11 +1,8 @@
-DROP TABLE IF EXISTS students;
-DROP TABLE IF EXISTS subjects;
-
 -- Customers table
 
 -- students ID	    Name    Email   Password_hash   Date_joined
 CREATE TABLE students (
-  student_id SERIAL PRIMARY KEY,
+  id SERIAL PRIMARY KEY,
   name TEXT,
   email TEXT,
   date_joined DATE,
@@ -16,10 +13,50 @@ CREATE TABLE students (
 
 -- subject ID   Title     Total_students 
 CREATE TABLE subjects (
-    subject_id SERIAL PRIMARY KEY,
-    title TEXT,
-    total_students INTEGER NOT NULL
+    id SERIAL PRIMARY KEY,
+    subject_title TEXT
 );
+
+-- Preference table
+
+-- preferences id   student_id  subjects
+CREATE TABLE preferences (
+  id SERIAL PRIMARY KEY,
+  student_id INTEGER,
+  subject_id INTEGER,
+
+  FOREIGN KEY(student_id)
+    REFERENCES students(id),
+  FOREIGN KEY(subject_id)
+    REFERENCES subjects(id)
+);
+
+-- Groups table
+
+-- groups id  subject_id  name
+CREATE TABLE groups (
+  id SERIAL PRIMARY KEY,
+  subject_id INTEGER,
+  group_name TEXT,
+
+  FOREIGN KEY(subject_id)
+    REFERENCES subjects(id)
+);
+
+-- Groups setup table (may remove this later)
+CREATE TABLE groups_setup (
+  id SERIAL PRIMARY KEY,
+  student_id INTEGER,
+  group_id INTEGER,
+
+  FOREIGN KEY(student_id)
+    REFERENCES students(id),
+
+  FOREIGN KEY(group_id)
+    REFERENCES groups(id)
+    ON DELETE CASCADE -- delete this reference if the parent element is deleted
+);
+
 
 -- prepopulate data (to remove later)
 

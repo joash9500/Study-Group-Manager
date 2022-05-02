@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Groups to Join{% endblock %}
+
+{% block section %}
+
+    <h1>Log In</h1>
+
+    <div>
+        <form action="/login" method="POST">
+            Email: <input type="text" name="email">
+            Password: <input type="password" name="password">
+            <input type="submit" value="Login">
+        </form>
+    </div>
+
+{% endblock %}
