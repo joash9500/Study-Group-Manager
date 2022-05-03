@@ -14,13 +14,23 @@
 
         <a href="{{url_for('index')}}">Home</a>
         <!-- show login or logout buttons if cookie exists in name variable -->
-        {% if name %} 
+        {% if name == 'admin' %}
             <a href="{{url_for('logout')}}">Logout</a>
+            <a href="{{url_for('subjects')}}">Subjects</a>
+            <a href="">Add groups</a>
+            <a href="">Add subjects</a>
+
+        {% elif name %} 
+            <a href="{{url_for('logout')}}">Logout</a>
+            <a href="{{url_for('subjects')}}">Subjects</a>
+            
         {% else %}
             <a href="{{url_for('login')}}">Login</a>
             <a href="{{url_for('signup')}}">Sign up</a>
+            <a href="{{url_for('subjects')}}">Subjects</a>
+
         {% endif %}
-            
+
 
         
         {% if name %}

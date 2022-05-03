@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %} {{subject}} {% endblock %}
+
+{% block section %}
+
+    <h1>Groups for {{subject}} </h1>
+
+    {% if name == 'admin' %}
+
+    <h3>hello {{name}}, what changes would you like to make today?</h3>
+
+    <form action="/subject_action", method="POST">
+        Add new group: <input type="text" name="add_group">
+        Delete group: <input type="text" name="delete_group">
+        <input type="hidden" name="subject" value="{{subject}}">
+        <input type="submit" value="Update">
+    </form>
+
+    {% elif name %}    
+
+    <h3>hello {{name}}, what groups do you want to join?</h3>
+
+    {% endif %}
+
+    {% for group in group_list %}
+
+        <li>{{ group[0] }}</li>
+
+    {% endfor %}
+
+{% endblock %}

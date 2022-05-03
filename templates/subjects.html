@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}Communities{% endblock %}
+
+{% block section %}
+
+    <h1>Communities you could be a part of:</h1>
+
+    {% for title in subjects %}
+        <a href="/subjects/{{ title[0] }} "><li>{{ title[0] }}</li></a>
+    {% endfor %}
+
+    {% if name == 'admin' %}
+
+        <form action="/subjects_action" method="POST">
+            Add new subject: <input type="text" name="add_subject">
+            Delete subject: <input type="text" name="delete_subject">
+            <input type="submit" value="Update">
+        </form>
+
+    {% endif %}
+
+{% endblock %}
