@@ -2,18 +2,19 @@
 
 {% block title %}Home{% endblock %}
 
+{% block head %}
+    <link rel="stylesheet" href="/static/css/index.css">
+{% endblock %}
+
 {% block section %}
 
     <h1>Connect with a Study Group and learn faster</h1>
-
     <h3>Find a Study Group near You!</h3>
-    <h3>Be involved and network!</h3>
-    <h3>No strings attached.</h3>
-    <h3>Welcome to the club</h3>
+    <h3>Let's help you on your study journey</h3>
 
     <img src="{{url_for('static', filename='/images/home1.jpg')}}" alt="person studying with macbook">
 
-    <h3>our members:</h3>
+    <h3>Our members:</h3>
     {% for student in list %}
         <li>{{ student[0] }}</li>
     {% endfor %}

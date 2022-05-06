@@ -1,20 +1,27 @@
 {% extends 'base.html' %}
 
-{% block title %} {{subject}} - Groups {% endblock %}
+{% block title %} Group - {{groupname}} {% endblock %}
 
 {% block section %}
 
-    <h1>Groups for {{subject}} </h1>
+    <h1>Hi {{name}}! Welcome to the team</h1>
 
     {% if name == 'admin' %}
 
-        <h3>Groups updated</h3>
+        <h3>Do something as admin</h3>
 
     {% elif name %}    
 
+        <h3>Let's start coding!</h3>
+
+        <h2>Struggling with a problem? Post a question on this page!</h2>
+
+        <section class="group_page">
+
+            
+
+        </section>
 
     {% endif %}
-
-
 
 {% endblock %}

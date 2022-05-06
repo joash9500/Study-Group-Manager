@@ -8,14 +8,15 @@
 
     {% if name == 'admin' %}
 
-    <h3>hello {{name}}, what changes would you like to make today?</h3>
+        <h3>hello {{name}}, what changes would you like to make today?</h3>
 
-    <form action="/subject_action", method="POST">
-        Add new group: <input type="text" name="add_group">
-        Delete group: <input type="text" name="delete_group">
-        <input type="hidden" name="subject" value="{{subject}}">
-        <input type="submit" value="Update">
-    </form>
+        <form action="/subject_action", method="POST">
+            Add new group: <input type="text" name="add_group">
+            Delete group: <input type="text" name="delete_group">
+            <!-- submit the subject name as a parameter to update the database with groups we add or delete -->
+            <input type="hidden" name="subject" value="{{subject}}">
+            <input type="submit" value="Update"> 
+        </form>
 
     {% elif name %}    
 
@@ -23,10 +24,29 @@
 
     {% endif %}
 
-    {% for group in group_list %}
+    {% if name %}
+        {% for group in joined_list %}
 
-        <li>{{ group[0] }}</li>
+            <a href="/groups/{{ group[0] }}"><li>{{ group[0] }}</li></a>
 
-    {% endfor %}
+        {% endfor %}
+
+        <!-- add a join button for groups that user has not joined yet -->
+        {% for group in not_joined_list %}
+
+            <li>{{ group[0] }}</li>
+   
+            <form action="/group_join", method="POST">
+                <input type="submit" name="join" value="join">
+                <input type="hidden" name="groupname" value="{{ group[0] }}">
+            </form>
+
+        {% endfor %}
+
+    {% else %}
+
+        <h3>You can't see groups yet. Please sign in or sign up <a href="{{url_for('signup')}}">here</a></h3>
+
+    {% endif %}
 
 {% endblock %}

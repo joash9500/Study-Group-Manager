@@ -1,0 +1,39 @@
+body {
+    background-color:slateblue;
+    margin:0;
+}
+
+.container {
+    width: 100vw;
+    height: 100vh;
+
+    font-family: 'Quicksand', sans-serif;
+    font-weight: bold;
+    font-size: 20px;
+
+    display: grid;
+    /* 3 rows only, 50px for nav bar, 100px for footer and flexible height for main content */
+    grid-template: 50px 1fr 100px / repeat(2, 1fr);
+    /* gap between grids */
+    gap: 10px;
+    /* add padding to edges of view window */
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+header {
+    grid-column-start: 1;
+    grid-column-end: 3;
+}
+
+.content {
+    grid-row-start: 2;
+    grid-row-end: 3;
+    grid-column-start: 1;
+    grid-column-end: 3;
+}
+
+footer {
+    grid-column: 1 / span 2;
+    text-align: center;
+}

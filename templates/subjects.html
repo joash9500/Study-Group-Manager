@@ -2,15 +2,23 @@
 
 {% block title %}Communities{% endblock %}
 
+{% block head %}
+    <link rel="stylesheet" href="/static/css/subjects.css">
+{% endblock %}
+
 {% block section %}
 
     <h1>Communities you could be a part of:</h1>
 
-    {% for title in subjects %}
-        <a href="/subjects/{{ title[0] }} "><li>{{ title[0] }}</li></a>
-    {% endfor %}
-
-    {% if name == 'admin' %}
+    <section class="subject_list">
+        {% for title in subjects %}
+        <!-- in this case, url_for is difficult to use as indexed variables don't work....so we use html instead -->
+            <li><a href="/subjects/{{ title[0] }}">{{ title[0] }}</a></li>
+        {% endfor %}
+    </section>
+   
+    <section class="admin_form">
+        {% if name == 'admin' %}
 
         <form action="/subjects_action" method="POST">
             Add new subject: <input type="text" name="add_subject">
@@ -18,6 +26,8 @@
             <input type="submit" value="Update">
         </form>
 
-    {% endif %}
+        {% endif %}
+    </section>
+  
 
 {% endblock %}

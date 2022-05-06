@@ -6,41 +6,54 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{% endblock %} - Study Group Finder</title>
     {% block head %}{% endblock %}
+    <link rel="stylesheet" href="{{url_for('static', filename='css/styles.css')}}">
 </head>
 <body>
-
-    <nav>
-        {% block header %}{% endblock %}
-
-        <a href="{{url_for('index')}}">Home</a>
-        <!-- show login or logout buttons if cookie exists in name variable -->
-        {% if name == 'admin' %}
-            <a href="{{url_for('logout')}}">Logout</a>
-            <a href="{{url_for('subjects')}}">Subjects</a>
-            <a href="">Add groups</a>
-            <a href="">Add subjects</a>
-
-        {% elif name %} 
-            <a href="{{url_for('logout')}}">Logout</a>
-            <a href="{{url_for('subjects')}}">Subjects</a>
-            
-        {% else %}
-            <a href="{{url_for('login')}}">Login</a>
-            <a href="{{url_for('signup')}}">Sign up</a>
-            <a href="{{url_for('subjects')}}">Subjects</a>
-
-        {% endif %}
-
-
+    <div class="container">
+        <header>
+            <nav>
+                {% block header %}{% endblock %}
         
-        {% if name %}
-            <h4>Logged in as {{ name }}</h4>
-        {% endif %}
+                <a href="{{url_for('index')}}">Home</a>
+                <!-- show login or logout buttons if cookie exists in name variable -->
+                {% if name == 'admin' %}
+                    <a href="{{url_for('subjects')}}">Subjects</a>
+                    <a href="{{url_for('logout')}}">Logout</a>
+                    
+                    <a href="">Add groups</a>
+                    <a href="">Add subjects</a>
+        
+                {% elif name %} 
+                    <a href="{{url_for('subjects')}}">Subjects</a>
+                    <a href="{{url_for('logout')}}">Logout</a>
+                    
+                {% else %}
+                    <a href="{{url_for('login')}}">Login</a>
+                    <a href="{{url_for('signup')}}">Sign up</a>
+                    <a href="{{url_for('subjects')}}">Subjects</a>
+        
+                {% endif %}
+                
+                {% if name %}
+                    <h4>Logged in as {{ name }}</h4>
+                {% endif %}
+        
+            </nav>
+        </header>
 
-    </nav>
+    
+        <main class="content">
 
-    <main>
-        {% block section %}{% endblock %}
-    </main>
+            {% block section %}{% endblock %}
+
+        </main>
+    
+        <footer>
+            {% block footer %} Project 2 beta {% endblock %}
+        </footer>
+    </div>
+
+
+
 </body>
 </html>
