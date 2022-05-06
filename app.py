@@ -163,7 +163,8 @@ def group_join():
 @app.route('/groups/<groupname>')
 def group(groupname):
 
-    group_posts = sql_fetch('SELECT user_post FROM group_post') #list of group posts
+    group_id = sql_fetch('SELECT id FROM groups WHERE group_name = %s', [groupname])
+    group_posts = sql_fetch('SELECT user_post FROM group_post WHERE group_id = %s', [group_id[0][0]]) #list of group posts
 
     return render_template('groups/group.html', groupname = groupname, name=session.get('name'), group_posts = group_posts)
 
