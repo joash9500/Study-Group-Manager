@@ -2,9 +2,13 @@
 
 {% block title %} Group - {{groupname}} {% endblock %}
 
+{% block head %}
+    <link rel="stylesheet" href="/static/css/group.css">
+{% endblock %}
+
 {% block section %}
 
-    <h1>Hi {{name}}! Welcome to the team</h1>
+    <h1>Hi {{name}}! Welcome to the team! Let's start coding.</h1>
 
     {% if name == 'admin' %}
 
@@ -12,13 +16,25 @@
 
     {% elif name %}    
 
-        <h3>Let's start coding!</h3>
-
         <h2>Struggling with a problem? Post a question on this page!</h2>
+
+       <div>
+            <form action="/msg_post" method="POST">
+                <p><label for="msg_box">Write your question below: </label></p>
+                <textarea id="msg_box" name="msg_box" rows="4" cols="80"></textarea>
+                <!-- store the user's name and groupname as variables when this form is posted -->
+                <input type="hidden" value="{{ name }}" name="name">
+                <input type="hidden" value="{{ groupname }}" name="groupname">
+                <input type="submit" value="Submit">
+            </form>
+       </div>
 
         <section class="group_page">
 
-            
+            <h1>Posts:</h1>
+            {% for post in group_posts %}
+                <li>{{ post[0] }}</li>
+            {% endfor %}
 
         </section>
 

@@ -1,3 +1,38 @@
-body {
-    background-color: blueviolet;
+.subject_list {
+    columns: 3;
+    background-color:teal;
+    border-radius: 20px;
+    column-gap: 30vh;
+    list-style: none;
+    padding: 4vh 4vh;
+}
+
+
+.subject_list > li {
+    display: inline-block;
+    /* let each list element to fill whole column width */
+    width: 100%;
+    margin-bottom: 30px;
+    margin-top: 30px;
+    text-align: center;
+
+}
+
+.subject_list > li > a {
+    display: block;
+    background-color: slateblue;
+    border-style: solid;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-decoration: none;
+    color: black;
+}
+
+.content {
+    text-align: center;
+    margin: auto;
+}
+
+h1 {
+    padding-bottom: 80px;
 }

@@ -10,9 +10,9 @@
 
     <h1>Communities you could be a part of:</h1>
 
+    <!-- in this case, url_for is difficult to use as indexed variables don't work....so we use html instead -->
     <section class="subject_list">
         {% for title in subjects %}
-        <!-- in this case, url_for is difficult to use as indexed variables don't work....so we use html instead -->
             <li><a href="/subjects/{{ title[0] }}">{{ title[0] }}</a></li>
         {% endfor %}
     </section>
@@ -20,7 +20,7 @@
     <section class="admin_form">
         {% if name == 'admin' %}
 
-        <form action="/subjects_action" method="POST">
+        <form action="/subjects" method="POST">
             Add new subject: <input type="text" name="add_subject">
             Delete subject: <input type="text" name="delete_subject">
             <input type="submit" value="Update">

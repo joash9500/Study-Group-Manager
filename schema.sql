@@ -57,6 +57,20 @@ CREATE TABLE groups_setup (
     ON DELETE CASCADE -- delete this reference if the parent element is deleted
 );
 
+-- Table for user posts
+CREATE TABLE group_post (
+  id SERIAL PRIMARY KEY,
+  student_id INTEGER,
+  group_id INTEGER,
+  user_post TEXT,
+
+  FOREIGN KEY(student_id)
+    REFERENCES students(id),
+
+  FOREIGN KEY(group_id)
+    REFERENCES groups(id)
+    ON DELETE CASCADE -- delete this reference if the parent element is deleted
+);
 
 -- prepopulate data (to remove later)
 

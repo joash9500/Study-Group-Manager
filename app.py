@@ -1,5 +1,5 @@
 from crypt import methods
-from flask import Flask, redirect, render_template, request, session
+from flask import Flask, redirect, render_template, request, session, url_for
 from db import sql_post, sql_fetch
 
 import bcrypt
@@ -101,25 +101,32 @@ def subjects_update():
 
     del_subject = request.form.get('delete_subject')
     sql_post('DELETE FROM subjects WHERE subject_title = %s', [del_subject]) #delete subject
+    sql_post('DELETE FROM subjects WHERE subject_title = %s', ['']) #after deleting subject, this line will delete the row from the table
+
     return redirect('/subjects')
 
 #indivudal subject html pages
 @app.route('/subjects/<subject>')
 def subject(subject):
     
+    name = session.get('name') #get login name of user
     subject_id = sql_fetch('SELECT id FROM subjects WHERE subject_title = %s', [subject])
     group_list = sql_fetch('SELECT group_name FROM groups WHERE subject_id = %s', [subject_id[0][0]])
 
-    name = session.get('name') #get login name of user
+    if name == 'admin': #if statement required as admin does not belong to any group
 
-    # use innerjoin to check dt tables with student id and group id
-    student_id = sql_fetch('SELECT id FROM students WHERE name = %s', [name])
-    joined_groups = sql_fetch('SELECT group_name FROM groups_setup INNER JOIN groups ON group_id = groups.id INNER JOIN students ON student_id = students.id WHERE student_id = %s', [student_id[0][0]])
+        return render_template('subjects/subject.html', subject = subject, name = name, not_joined_list = group_list)
 
-    joined = list(set(group_list).intersection(joined_groups)) #get groups that user has joined in the subject community
-    not_joined = list(set(group_list).difference(joined_groups)) #get groups that user has NOT joined in the subject community
+    else: 
+    
+        # use innerjoin to check dt tables with student id and group id
+        student_id = sql_fetch('SELECT id FROM students WHERE name = %s', [name])
+        joined_groups = sql_fetch('SELECT group_name FROM groups_setup INNER JOIN groups ON group_id = groups.id INNER JOIN students ON student_id = students.id WHERE student_id = %s', [student_id[0][0]])
 
-    return render_template('subjects/subject.html', subject = subject, name = name, joined_list = joined, not_joined_list = not_joined)
+        joined = list(set(group_list).intersection(joined_groups)) #get groups that user has joined in the subject community
+        not_joined = list(set(group_list).difference(joined_groups)) #get groups that user has NOT joined in the subject community
+
+        return render_template('subjects/subject.html', subject = subject, name = name, joined_list = joined, not_joined_list = not_joined)
 
 @app.route('/subject_action', methods=['POST'])
 def groups_update():
@@ -132,8 +139,9 @@ def groups_update():
 
     sql_post('INSERT INTO groups (subject_id, group_name) VALUES (%s, %s)', [subject_id[0][0], new_group]) #update database with new group and its subject id
     sql_post('DELETE FROM groups WHERE group_name = %s', [delete_group]) #update database with new group
+    sql_post('DELETE FROM groups WHERE group_name = %s', ['']) #delete row from table
 
-    return redirect('/subjects')
+    return redirect(url_for('subject', subject=subject))
 
 #join groups
 
@@ -149,11 +157,30 @@ def group_join():
     return redirect('/subjects')
 
 #group page
+#user can post messages to the group page
+#user can read messages from posts
 
 @app.route('/groups/<groupname>')
 def group(groupname):
 
-    return render_template('groups/group.html', groupname = groupname, name=session.get('name'))
+    group_posts = sql_fetch('SELECT user_post FROM group_post') #list of group posts
+
+    return render_template('groups/group.html', groupname = groupname, name=session.get('name'), group_posts = group_posts)
+
+#post user message to database
+
+@app.route('/msg_post', methods=['POST'])
+def post_msg():
+
+    name = request.form.get('name')
+    groupname = request.form.get('groupname')
+    msgpost = request.form.get('msg_box')
+
+    student_id = sql_fetch('SELECT id FROM students WHERE name = %s', [name])
+    group_id = sql_fetch('SELECT id FROM groups WHERE group_name = %s', [groupname])
+    sql_post('INSERT INTO group_post (student_id, group_id, user_post) VALUES (%s, %s, %s)', [student_id[0][0], group_id[0][0], msgpost])
+
+    return redirect(url_for('group', groupname = groupname))
 
 if __name__ == '__main__': #we need this for heroku to work
     app.run(debug=True)
