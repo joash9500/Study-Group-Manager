@@ -62,6 +62,17 @@ Students can see the nav bar at the top, to move around the web app:
 (WIP) student can have a profile page (with bio, fb link etc.)
 (WIP) Other students in shared groups can see other user profiles
 
+### To start the Python app/server (on localhost)
+1. enter the virtual environment (with pre-installed python packages/modules) by typing in terminal:
+```
+source venv/bin/activate
+```
+
+2. then you can start the server by typing in terminal: 
+```
+python app.py
+```
+
 
 
 
