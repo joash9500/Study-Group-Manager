@@ -117,7 +117,7 @@ def subject(subject):
 
         return render_template('subjects/subject.html', subject = subject, name = name, not_joined_list = group_list)
 
-    else: 
+    elif name: 
     
         # use innerjoin to check dt tables with student id and group id
         student_id = sql_fetch('SELECT id FROM students WHERE name = %s', [name])
@@ -128,6 +128,11 @@ def subject(subject):
 
         return render_template('subjects/subject.html', subject = subject, name = name, joined_list = joined, not_joined_list = not_joined)
 
+    else:
+        
+        return render_template('subjects/subject.html', subject = subject)
+
+        
 @app.route('/subject_action', methods=['POST'])
 def groups_update():
 
