@@ -1,4 +1,3 @@
-from crypt import methods
 from flask import Flask, redirect, render_template, request, session, url_for
 from db import sql_post, sql_fetch
 
@@ -71,7 +70,7 @@ def signup_action():
     email = request.form.get('email')
     password = request.form.get('password')
     password_hashed = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode() #store hashed version of password
-    date_joined = date.today().strftime("%d/%m/%y")
+    date_joined = date.today().strftime("%Y/%m/%d")
 
     # check if user exists in database 
     students_info = sql_fetch('SELECT name, email, password_hash FROM students WHERE email = %s', [email])
@@ -115,7 +114,7 @@ def subject(subject):
 
     if name == 'admin': #if statement required as admin does not belong to any group
 
-        return render_template('subjects/subject.html', subject = subject, name = name, not_joined_list = group_list)
+        return render_template('subjects/subject.html', subject = subject, name = name, joined_list = group_list)
 
     elif name: 
     
@@ -130,7 +129,7 @@ def subject(subject):
 
     else:
         
-        return render_template('subjects/subject.html', subject = subject)
+        return render_template('subjects/subject.html', subject = subject, not_joined_list = group_list)
 
         
 @app.route('/subject_action', methods=['POST'])
@@ -141,10 +140,12 @@ def groups_update():
 
     new_group = request.form.get('add_group')
     delete_group = request.form.get('delete_group')
+    group_id = sql_fetch('SELECT id FROM groups WHERE group_name = %s', [delete_group])
 
-    sql_post('INSERT INTO groups (subject_id, group_name) VALUES (%s, %s)', [subject_id[0][0], new_group]) #update database with new group and its subject id
-    sql_post('DELETE FROM groups WHERE group_name = %s', [delete_group]) #update database with new group
-    sql_post('DELETE FROM groups WHERE group_name = %s', ['']) #delete row from table
+    if new_group:
+        sql_post('INSERT INTO groups (subject_id, group_name) VALUES (%s, %s)', [subject_id[0][0], new_group]) #update database with new group and its subject id
+    if delete_group:
+        sql_post('DELETE FROM groups WHERE id = %s', [group_id[0][0]]) #delete group from database 
 
     return redirect(url_for('subject', subject=subject))
 
@@ -169,8 +170,8 @@ def group_join():
 def group(groupname):
 
     group_id = sql_fetch('SELECT id FROM groups WHERE group_name = %s', [groupname])
-    group_posts = sql_fetch('SELECT user_post FROM group_post WHERE group_id = %s', [group_id[0][0]]) #list of group posts
-
+    group_posts = sql_fetch('SELECT name, date_post, user_post FROM group_post JOIN students ON group_post.student_id = students.id WHERE group_id = %s', [group_id[0][0]]) #list of group posts
+    print(group_posts[0][1])
     return render_template('groups/group.html', groupname = groupname, name=session.get('name'), group_posts = group_posts)
 
 #post user message to database
@@ -181,10 +182,11 @@ def post_msg():
     name = request.form.get('name')
     groupname = request.form.get('groupname')
     msgpost = request.form.get('msg_box')
+    datepost = date.today().strftime("%Y/%m/%d")
 
     student_id = sql_fetch('SELECT id FROM students WHERE name = %s', [name])
     group_id = sql_fetch('SELECT id FROM groups WHERE group_name = %s', [groupname])
-    sql_post('INSERT INTO group_post (student_id, group_id, user_post) VALUES (%s, %s, %s)', [student_id[0][0], group_id[0][0], msgpost])
+    sql_post('INSERT INTO group_post (student_id, group_id, user_post, date_post) VALUES (%s, %s, %s, %s)', [student_id[0][0], group_id[0][0], msgpost, datepost])
 
     return redirect(url_for('group', groupname = groupname))
 

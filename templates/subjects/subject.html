@@ -11,9 +11,7 @@
     <h1>Groups for {{subject}} </h1>
 
     {% if name == 'admin' %}
-
         <h3>hello {{name}}, what changes would you like to make today?</h3>
-
         <form action="/subject_action", method="POST">
             Add new group: <input type="text" name="add_group">
             Delete group: <input type="text" name="delete_group">
@@ -21,48 +19,41 @@
             <input type="hidden" name="subject" value="{{subject}}">
             <input type="submit" value="Update"> 
         </form>
-
+        <h3>All groups in {{subject}}: </h3>
+        {% for group in joined_list %}
+        <li><a href="/groups/{{ group[0] }}">{{ group[0] }}</a></li>
+        {% endfor %}
     {% elif name %}    
-
-    <h3>Hello {{name}}, what groups do you want to join?</h3>
-
-    {% endif %}
-
-    
-        {% if name %}
-
+        <h3>Hello {{name}}, what groups do you want to join?</h3>
         <section class="group_container">
             <section class="groups_joined">
                 <h3>Groups you have joined: </h3>
                 {% for group in joined_list %}
-
                 <li><a href="/groups/{{ group[0] }}">{{ group[0] }}</a></li>
-
                 {% endfor %}
             </section>
-
             <section class="groups_not_joined">
                 <h3>Other groups you can join: </h3>
-                 <!-- add a join button for groups that user has not joined yet -->
+                <!-- add a join button for groups that user has not joined yet -->
                 {% for group in not_joined_list %}
                 <div>
-
                     <li>{{ group[0] }}</li>
-
                     <form action="/group_join", method="POST">
                         <input type="submit" name="join" value="join">
                         <input type="hidden" name="groupname" value="{{ group[0] }}">
                     </form>
-
                 </div>
                 {% endfor %}
             </section>
-
-        {% else %}
-
-            <h3>You can't see groups yet. Please sign in or sign up <a href="{{url_for('signup')}}">here</a></h3>
-
+    {% else %}
+            <h3>Groups you can join: </h3>
+            {% for group in not_joined_list %}
+            <div>
+                <li>{{ group[0] }}</li>
+            </div>
+            {% endfor %}
+            <h3>You can't join groups yet. Please sign in or sign up <a href="{{url_for('signup')}}">here</a></h3>
         </section>
-        {% endif %}
+    {% endif %}
     
 {% endblock %}

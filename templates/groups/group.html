@@ -18,7 +18,7 @@
 
         <h2>Struggling with a problem? Post a question on this page!</h2>
 
-       <div>
+        <div>
             <form action="/msg_post" method="POST">
                 <p><label for="msg_box">Write your question below: </label></p>
                 <textarea id="msg_box" name="msg_box" rows="4" cols="80"></textarea>
@@ -27,15 +27,19 @@
                 <input type="hidden" value="{{ groupname }}" name="groupname">
                 <input type="submit" value="Submit">
             </form>
-       </div>
+        </div>
 
+        <h1>Posts:</h1>
         <section class="group_page">
-
-            <h1>Posts:</h1>
             {% for post in group_posts %}
-                <li>{{ post[0] }}</li>
+            <div>
+                <div className="comment-content">
+                    <div className="comment-author">{{post[0]}}</div>
+                    <div>{{post[1]}}</div>
+                </div>
+                <div>{{ post[2] }}</div>
+            </div>
             {% endfor %}
-
         </section>
 
     {% endif %}
