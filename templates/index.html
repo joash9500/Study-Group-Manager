@@ -3,30 +3,120 @@
 {% block title %}Home{% endblock %}
 
 {% block head %}
-    <link rel="stylesheet" href="/static/css/index.css">
+
 {% endblock %}
 
-{% block section %}
+{% block section_hero %}
 
-    <h1>Connect with a Study Group and learn faster</h1>
-    <h3>Find a Study Group near You!</h3>
-    <h3>Let us help you on your journey</h3>
+    <!-- hero section -->
+    <div class="flex flex-col mb-16 space-y-8 md:w-1/2">
+        <h1 class="text-5xl font-bold text-center md:text-4xl md:text-left">Connect with a study group and learn faster</h1>
+        <p class="text-center text-gray-400 md:text-left">Find a study group near you and let us help you on your journey.</p>
+        <!-- button -->
+        <div class="flex justify-center md:justify-start">
+            <a href="#" class="p-3 px-6 pt-2 font-bold bg-slate-300 rounded-full baseline hover:bg-orange-500 ">Join Now</a>
+        </div>
+    </div>
+    <!-- image -->
+    <div class="md:w-1/2">
+        <img src="{{url_for('static', filename='img/landing2.png')}}" alt="imaginative dreamworld" class="rounded-[24px]">
+    </div>
 
-    <img src="{{url_for('static', filename='/images/home1.jpg')}}" alt="person studying with macbook">
+{% endblock %}
 
-    <h3>What we offer: </h3>
-    <li>chat room support</li>
-    <li>community resources and a safe place to learn and grow</li>
-    <li>positivity and guidance so you can achieve your goals</li>
+{% block section_features %}
+<!-- features-->
+<!-- flex container -->
+<div class="container mx-auto flex flex-col space-y-6">
+    <!-- heading -->
+    <div class="flex flex-col space-y-6 mb-16">
+        <h2 class="text-3xl font-bold text-center">
+            Why Choose Us?
+        </h2>
+        <p class="text-center text-gray-400 ">We will work with you on your learning journey</p>
+    </div>
 
-    <h3>Success stories from our members:</h3>
-    <p>"Study group finder has been amazing in my journey to build my confidence again to pursue my dream job as a radiologist. I'm now on track to finish my course at uni with a job lined up on graduating!" - Bob 2.0</p>  
-    <p>"My son was struggling with math at school, but after trying Study Group Finder, he now has a better grasp with difficult concepts and its achieving at school! - A Proud Mum"</p>
-    <p>"I was seeking to upskill for my career, and Study Group Finder has helped me grow that professional path without the hassle" - An Inspired Employee</p>
+    <div class="flex justify-center">
+        <div class="w-full md:w-1/2">
+            <img src="{{url_for('static', filename='img/shop.jpg')}}" alt="person using laptop" class="rounded-[24px] w-96 ml-auto mr-8 shadow-lg">
+        </div>        
+        <div class="w-full md:w-1/2 px-12 mt-8">
+            <h4 class="text-2xl font-bold mb-3">Live chat room support</h4>
+            <p class="text-slate-300">We will be there when you are. Connect with fellow students in real-time through our live chat room feature. Whether you have a quick question or need assistance with a challenging concept, our chat room provides a platform for instant communication and collaboration.</p>
+        </div>
+    </div>
 
-    <!-- <h3>Our members:</h3>
-    {% for student in list %}
-        <li>{{ student[0] }}</li>
-    {% endfor %} -->
+    <div class="flex justify-center">      
+        <div class="w-full md:w-1/2 px-12 mt-8">
+            <h4 class="text-2xl font-bold mb-3 text-right">Ample learning resources</h4>
+            <p class="text-slate-300 text-right">A community and a safe place for you to learn and grow. Access a wide range of learning resources to enhance your study experience. From interactive quizzes and educational videos to comprehensive study guides and practice exams, we provide a rich collection of materials to support your academic journey.</p>
+        </div>
+        <div class="w-full md:w-1/2">
+            <img src="{{url_for('static', filename='img/resources2.jpg')}}" alt="animated library" class="rounded-[24px] w-96 ml-8 shadow-lg">
+        </div>  
+    </div>
 
+    <div class="flex justify-center">      
+        <div class="w-full md:w-1/2">
+            <img src="{{url_for('static', filename='img/journey.jpg')}}" alt="hikers pathfinding in forest" class="rounded-[24px] w-96 ml-auto mr-8 object-cover shadow-lg">
+        </div>  
+        <div class="w-full md:w-1/2 px-12">
+            <h4 class="text-2xl font-bold mb-3">Guidance for your journey</h4>
+            <p class="text-slate-300">Positivity and guidance to help you achieve your goals. We understand that navigating your educational journey can be challenging. That's why we offer guidance from experienced mentors and tutors who are passionate about helping you succeed. Receive personalized advice, study tips, and mentorship to stay motivated and achieve your goals.</p>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block section_testimonials%}
+<!-- testimonials -->
+<!-- container for heading and testimonials -->
+<div class="container mx-auto mt-16 mb-16 mx-auto text-center">
+    <!-- heading -->
+    <div class="flex flex-col space-y-6">
+        <h2 class="text-3xl font-bold text-center">
+            Hear from our students
+        </h2>
+        <p class="text-center text-gray-400 ">Our students trust us because we deliver results! Our 95% satisfaction rate and our members continue to grow exponentially year on year.</p>
+    </div>
+
+    <!-- textimonial container -->
+    <div class="flex flex-col mt-24 md:flex-row md:space-x-6">
+        <!-- testimonial 1 -->
+        <div class="flex flex-col items-center p-6 space-y-6 rounded-lg bg-slate-200 md:w-1/3 shadow-lg">
+            <img src="{{url_for('static', filename='img/avatar-anisha.png')}}" alt="" class="w-24 -mt-14">
+            <h5 class="text-lg font-bold">Anisha Li</h5>
+            <p class="text-sm">
+                "Study Group Finder has been amazing for me! I have gone leaps and bounds ahead of the competition! Best value for money ever!"
+            </p>
+        </div>
+        <!-- testimonial 2 -->
+        <!-- hide this testimonial on smaller screens -->
+        <div class="hidden flex flex-col items-center p-6 space-y-6 rounded-lg bg-slate-200 shadow-lg md:flex md:w-1/3">
+            <img src="{{url_for('static', filename='img/avatar-richard.png')}}" alt="" class="w-24 -mt-14">
+            <h5 class="text-lg font-bold">Richard Watts</h5>
+            <p class="text-sm">
+                "Study Group Finder was a godsend! I learnt so much working with a study group and made so many friends. I'm more motivated than ever to pursue my goals."
+            </p>
+        </div>
+        <!-- testimonial 3 -->
+        <!-- hide this testimonial on smaller screens -->
+        <div class="hidden flex flex-col items-center p-6 space-y-6 rounded-lg bg-slate-200 shadow-lg md:flex md:w-1/3">
+            <img src="{{url_for('static', filename='img/avatar-shanai.png')}}" alt="" class="w-24 -mt-14">
+            <h5 class="text-lg font-bold">Shanai Roger</h5>
+            <p class="text-sm">
+                "Highly recommend Study Group Finder, it was amazing being a part of this community."
+            </p>
+        </div>
+    </div>
+</div>
+    
+{% endblock %}
+
+{% block footer %}
+    <div class="mx-auto my-0">
+        <p>project 2 beta</p>
+    </div>
 {% endblock %}

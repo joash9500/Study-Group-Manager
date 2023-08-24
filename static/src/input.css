@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* background body */
+body {
+    min-height: 100vh;
+    position: relative;
+    background: rgb(30,58,138);
+    background: linear-gradient(45deg, rgba(30,58,138,1) 38%, rgba(50,131,159,1) 92%);
+    background-repeat: no-repeat;
+}
+
+#footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}

@@ -3,7 +3,7 @@
 {% block title %} Group - {{groupname}} {% endblock %}
 
 {% block head %}
-    <link rel="stylesheet" href="/static/css/group.css">
+
 {% endblock %}
 
 {% block section %}
@@ -31,15 +31,19 @@
 
         <h1>Posts:</h1>
         <section class="group_page">
-            {% for post in group_posts %}
-            <div>
-                <div className="comment-content">
-                    <div className="comment-author">{{post[0]}}</div>
-                    <div>{{post[1]}}</div>
+            {% if group_posts != [] %}
+                {% for post in group_posts %}
+                <div>
+                    <div className="comment-content">
+                        <div className="comment-author">{{post[0]}}</div>
+                        <div>{{post[1]}}</div>
+                    </div>
+                    <div>{{ post[2] }}</div>
                 </div>
-                <div>{{ post[2] }}</div>
-            </div>
-            {% endfor %}
+                {% endfor %}
+            {% else %}
+                <div>No posts yet! Be the first to write one!</div>
+            {% endif %}
         </section>
 
     {% endif %}

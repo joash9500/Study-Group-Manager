@@ -20,7 +20,13 @@ def index():
     cur = conn.cursor()
     cur.execute('SELECT name FROM students')
     students_list = cur.fetchall()
-    return render_template('index.html', list = students_list, name = session.get('name')) #checks if name cookie has been set up with session
+    session_name = session.get('name')
+    return render_template('index.html', list = students_list, name = session_name) #checks if name cookie has been set up with session
+
+@app.route('/about')
+def about():
+
+    return render_template('about.html')
 
 @app.route('/login', methods=['POST'])
 def login_action():
@@ -83,7 +89,7 @@ def signup_action():
         session['name'] = name
         session['last login'] = str(datetime.now())
         return redirect('/')
-    
+     
 @app.route('/subjects')
 def subjects():
 
@@ -168,12 +174,13 @@ def group_join():
 
 @app.route('/groups/<groupname>')
 def group(groupname):
-
+ 
     group_id = sql_fetch('SELECT id FROM groups WHERE group_name = %s', [groupname])
-    group_posts = sql_fetch('SELECT name, date_post, user_post FROM group_post JOIN students ON group_post.student_id = students.id WHERE group_id = %s', [group_id[0][0]]) #list of group posts
-    print(group_posts[0][1])
-    return render_template('groups/group.html', groupname = groupname, name=session.get('name'), group_posts = group_posts)
+    page_posts = sql_fetch('SELECT name, date_post, user_post FROM group_post JOIN students ON group_post.student_id = students.id WHERE group_id = %s', [group_id[0][0]]) #list of group posts
+    print(page_posts)
 
+    return render_template('groups/group.html', groupname = groupname, name=session.get('name'), group_posts = page_posts)
+   
 #post user message to database
 
 @app.route('/msg_post', methods=['POST'])

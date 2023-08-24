@@ -6,51 +6,95 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{% endblock %} - Study Group Finder</title>
     {% block head %}{% endblock %}
-    <link rel="stylesheet" href="{{url_for('static', filename='css/styles.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='dist/css/output.css')}}">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <nav>
-                {% block header %}{% endblock %}
-        
-                <a href="{{url_for('index')}}">Home</a>
-                <!-- show login or logout buttons if cookie exists in name variable -->
-                {% if name == 'admin' %}
-                    <a href="{{url_for('subjects')}}">Subjects</a>
-                    <a href="{{url_for('logout')}}">Logout</a>
-        
-                {% elif name %} 
-                    <a href="{{url_for('subjects')}}">Subjects</a>
-                    <a href="{{url_for('logout')}}">Logout</a>
-                    
-                {% else %}
-                    <a href="{{url_for('login')}}">Login</a>
-                    <a href="{{url_for('signup')}}">Sign up</a>
-                    <a href="{{url_for('subjects')}}">Subjects</a>
-        
-                {% endif %}
-                
-                {% if name %}
-                    <h4>Logged in as {{ name }}</h4>
-                {% endif %}
-        
+        <header id="header">
+            {% block header %}{% endblock %}      
+            <!-- navbar -->
+            <nav class="relative container mx-auto py-2">
+                <!-- flex container -->
+                <div class="flex justify-between">
+                    <!-- primary nav -->
+                    <div class="flex items-center space-x-6">
+                        <!-- logo -->
+                        <div class="h-16 w-16" alt="">
+                            <img src="{{url_for('static', filename='img/logo.png')}}" >
+                        </div>                    
+                        <!-- menu -->
+                        <div class="hidden space-x-6 md:flex">
+                            <a href="{{url_for('index')}}" class="hover:text-orange-500 text-slate-300">Home</a>
+                            <a href="{{url_for('about')}}" class="hover:text-orange-500 text-slate-300">About Us</a>
+                            <!-- show login or logout buttons if cookie exists in name variable -->
+                            <a href="{{url_for('subjects')}}" class="hover:text-orange-500 text-slate-300">Subjects</a>
+                        </div>
+                    </div>
+
+                    <!-- secondary nav -->
+                    <div class="flex items-center  space-x-6">   
+                        <div class="hidden space-x-6 md:flex p-3">
+                            {% if name == 'admin' %}
+                                <h4>Logged in as {{ name }}</h4>
+                                <a href="{{url_for('logout')}}" class="text-slate-300 hover:text-orange-500">Logout</a>
+                            {% elif name %} 
+                                <h4>Logged in as {{ name }}</h4>
+                                <a href="{{url_for('logout')}}" class="text-slate-300 hover:text-orange-500 ">Logout</a>
+                            {% else %}
+                                <a href="{{url_for('login')}}" class="text-slate-300 hover:text-orange-500 ">Login</a>
+                                <a href="{{url_for('signup')}}" class="text-slate-300 hover:text-orange-500 ">Sign up</a>
+                            {% endif %} 
+                        </div>                           
+                    </div>
+                </div>
             </nav>
         </header>
-
     
-        <main class="content">
+        <main id="main">
+            <!-- hero section -->
+            <section id="hero">
+                <!-- flex container -->
+                <div class="container flex flex-col-reverse items-center px-6 mx-auto mt-10 space-y-0 md:flex-row">
+                    {% block section_hero %}
 
-            {% block section %}{% endblock %}
+                    {% endblock %}
+                </div>
+            </section>
+
+            <!-- features section -->
+            <section id="features">
+                <!-- flex container -->
+                <div class="container flex flex-col mx-auto space-y-12 mt-10">
+                    {% block section_features %}
+
+                    {% endblock %}
+                </div>
+            </section>
+
+            <!-- section testimonials -->
+            <section id="testimonials">
+                <!-- flex container -->
+                <div class="flex flex-col mx-auto">
+                    {% block section_testimonials %}s
+
+                    {% endblock %}
+                </div>
+            </section>
+
+            <!-- section general -->
+            <section class="">
+                <!-- flex container -->
+                <div class="container flex flex-col mx-auto items-center">
+                    {% block section %}
+
+                    {% endblock %}
+                </div>
+            </section>
 
         </main>
     
-        <footer>
+        <footer id="footer">
             {% block footer %} Project 2 beta {% endblock %}
         </footer>
-    </div>
-
-
 
 </body>
 </html>

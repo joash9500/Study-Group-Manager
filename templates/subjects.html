@@ -3,31 +3,40 @@
 {% block title %}Communities{% endblock %}
 
 {% block head %}
-    <link rel="stylesheet" href="/static/css/subjects.css">
+
 {% endblock %}
 
 {% block section %}
 
-    <h1>Communities you could be a part of:</h1>
+    <!-- container -->
+    <div class="container mx-auto space-y-6">
+        <!-- heading -->
+        <div class="space-y-6 mb-16">
+            <h2 class="text-3xl font-bold text-center">
+                Communitites you can join
+            </h2>
+            <p class="text-center text-gray-400 ">Learn and thrive together. Be a member. Join a team. Grow together.</p>
+        </div>
 
-    <!-- in this case, url_for is difficult to use as indexed variables don't work....so we use html instead -->
-    <section class="subject_list">
-        {% for title in subjects %}
-            <li><a href="/subjects/{{ title[0] }}">{{ title[0] }}</a></li>
-        {% endfor %}
-    </section>
-   
-    <section class="admin_form">
-        {% if name == 'admin' %}
+        <!-- in this case, url_for is difficult to use as indexed variables don't work....so we use html instead -->
+        <div class="grid md:grid-cols-3 gap-6">
+            {% for title in subjects %}
+                <a href="/subjects/{{ title[0] }}" class="p-3 px-6 pt-2 font-bold bg-slate-300 rounded-full baseline hover:bg-orange-500">{{ title[0] }}</a>
+            {% endfor %}
+        </div>
 
-        <form action="/subjects" method="POST">
-            Add new subject: <input type="text" name="add_subject">
-            Delete subject: <input type="text" name="delete_subject">
-            <input type="submit" value="Update">
-        </form>
+        <section class="admin_form">
+            {% if name == 'admin' %}
 
-        {% endif %}
-    </section>
+            <form action="/subjects" method="POST">
+                Add new subject: <input type="text" name="add_subject">
+                Delete subject: <input type="text" name="delete_subject">
+                <input type="submit" value="Update">
+            </form>
+
+            {% endif %}
+        </section>
   
+    </div>
 
 {% endblock %}
