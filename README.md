@@ -71,8 +71,11 @@ source venv/bin/activate
 2. then you can start the server by typing in terminal: 
 ```
 python app.py
-```
 
+```
+## NOTE
+1. Procfile is required, to deploy the python app
+2. Deployment of python app is achieved with gunicorn (installed in virtual environment)
 
 
 
