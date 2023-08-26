@@ -76,7 +76,7 @@ python app.py
 ## NOTE
 1. Procfile can be used (if using Nixpacks, like Railway and Heroku...) to start the app on deployment.
 2. Deployment of python app is achieved with gunicorn (installed in virtual environment)
-
+3. 
 
 
 

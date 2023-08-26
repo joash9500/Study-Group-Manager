@@ -82,6 +82,9 @@
   "devDependencies": {
     "tailwindcss": "^3.3.2"
   },
+  "optionalDependencies": {
+    "fsevents": "^2.1.2"
+  },
   "scripts": {
     "build": "tailwindcss -i ./static/src/input.css -o ./static/dist/css/output.css --watch"
   }
