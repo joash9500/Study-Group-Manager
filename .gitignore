@@ -129,3 +129,6 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Added 26/8. Remove package-lock.json
+.package-lock.json
