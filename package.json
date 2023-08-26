@@ -86,7 +86,6 @@
     "fsevents": "^2.1.2"
   },
   "scripts": {
-    "dev": "tailwindcss -i ./static/src/input.css -o ./static/dist/css/output.css --watch",
-    "build": "npx tailwindcss -o build.css --minify"
+    "build": "tailwindcss -i ./static/src/input.css -o ./static/dist/css/output.css --watch"
   }
 }
