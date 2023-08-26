@@ -198,4 +198,4 @@ def post_msg():
     return redirect(url_for('group', groupname = groupname))
 
 if __name__ == '__main__': #we need this for heroku to work
-    app.run(debug=True, port=os.getenv("PORT", default=5000))
+    app.run(debug=True)
